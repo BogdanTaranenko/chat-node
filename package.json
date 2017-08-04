@@ -1,0 +1,18 @@
+{
+  "name": "chat-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "8.2.1"
+  },
+  "author": "Taranenko",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
