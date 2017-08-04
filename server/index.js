@@ -15,7 +15,18 @@ let io = socketio(server);
 io.on('connection', (socket) => {
    console.log('New user connected');
 
-    socket.on('disconnect', () => {
+
+   socket.emit('newMessage', {
+      from: "Roma",
+      text: "Got it!",
+      createAt: "just now"
+   });
+
+   socket.on('createMessage', (message) => {
+      console.log('create message', message)
+   });
+
+   socket.on('disconnect', () => {
        console.log("User leave page");
     })
 });
