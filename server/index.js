@@ -1,6 +1,5 @@
 const path = require('path');
 const http = require('http');
-
 const express = require('express');
 const socketio = require('socket.io');
 
@@ -16,14 +15,13 @@ io.on('connection', (socket) => {
    console.log('New user connected');
 
 
-   socket.emit('newMessage', {
-      from: "Roma",
-      text: "Got it!",
-      createAt: "just now"
-   });
-
    socket.on('createMessage', (message) => {
-      console.log('create message', message)
+      console.log('create message', message);
+       io.emit('newMessage', {
+          from: message.from,
+          text: message.text,
+          createAt: new Date().getTime()
+       });
    });
 
    socket.on('disconnect', () => {

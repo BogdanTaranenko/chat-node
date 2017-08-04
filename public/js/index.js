@@ -5,11 +5,6 @@
 
 socket.on('connect', function ()  {
     console.log('Connected to server');
-
-    socket.emit('createMessage', {
-        from: "Bogdan",
-        text: "work!"
-    });
 });
 
 socket.on('disconnect', function () {
