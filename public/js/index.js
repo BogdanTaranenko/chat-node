@@ -15,28 +15,35 @@ let formattedTime;
 
     socket.on('newMessage', function (message) {
         formattedTime = moment(message.createdAt).format('h:mm a');
-        let li = $('<li></li>');
-        li.text(`${message.from} ${formattedTime}: ${message.text}`);
+        let template = $('#message-template').html();
+        let html = Mustache.render(template, {
+            text: message.text,
+            from: message.from,
+            createdAt: formattedTime
+        });
 
-        $('#messages').append(li);
+        $('#messages').append(html);
     });
 
     socket.on('newLocationMessage', function (message){
-        let li = $('<li></li>');
-        let a = $('<a target="_blank">My current location</a>');
-
         formattedTime = moment(message.createdAt).format('h:mm a');
 
-        li.text(`${message.from} ${formattedTime}: `);
-        a.attr('href', message.url);
+        let template = $('#location-message-template').html();
+        let html = Mustache.render(template, {
+           from: message.from,
+            url: message.url,
+            createdAt: formattedTime
+        });
 
-        li.append(a);
-        $('#messages').append(li);
+        $('#messages').append(html);
     });
 
     $('#message-form').on('submit', function (e) {
        e.preventDefault();
        let input = $('#input-message');
+       if(!input.val()){
+           return 0;
+       }
        socket.emit('createMessage', {
            from: "User",
            text: input.val()
