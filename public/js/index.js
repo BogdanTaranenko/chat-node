@@ -21,7 +21,7 @@ let socket = io();
 
     socket.on('newLocationMessage', function (message){
         let li = $('<li></li>');
-        let a = $('<a target="_blank">My current location</a>')
+        let a = $('<a target="_blank">My current location</a>');
     
         li.text(`${message.from}: `);
         a.attr('href', message.url);
@@ -30,14 +30,14 @@ let socket = io();
         $('#messages').append(li);
     });
 
-    $('#form-message').on('submit', function (e) {
+    $('#message-form').on('submit', function (e) {
        e.preventDefault();
-       let inputValue = $('[name=input-message]');
+       let input = $('#input-message');
        socket.emit('createMessage', {
            from: "User",
-           text: inputValue.val()
+           text: input.val()
        }, function () {
-           inputValue.val('');
+           input.val('');
        })
     });
 
@@ -46,12 +46,19 @@ let socket = io();
        if(!navigator.geolocation) {
            alert("Not supported!")
        }
+
+       locationButton.attr('disabled', 'disabled').text('Sending...');
+
+
        navigator.geolocation.getCurrentPosition(function (position) {
+           locationButton.removeAttr('disabled').text('Send location');
+
            socket.emit('createLocationMessage', {
                latitude: position.coords.latitude,
                longitude: position.coords.longitude
            })
        }, function () {
+           locationButton.removeAttr('disabled').text('Send location');
            alert("Unable to fetch!")
        })
     });

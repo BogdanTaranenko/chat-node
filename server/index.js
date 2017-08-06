@@ -10,6 +10,8 @@ const port = process.env.PORT || 3000;
 let app = express();
 let server = http.createServer(app);
 
+app.use(express.static(publicPath));
+
 let io = socketio(server);
 
 
@@ -40,7 +42,7 @@ io.on('connection', (socket) => {
     })
 });
 
-app.use(express.static(publicPath));
+
 
 server.listen(port, () => {
    console.log(`Running on port ${port}`);
