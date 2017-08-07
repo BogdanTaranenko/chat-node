@@ -193,3 +193,7 @@ button:disabled {
         margin-right: 0px;
     }
 }
+
+.fa-paper-plane {
+    padding-left: 6px;
+}

@@ -5,7 +5,7 @@ const socketio = require('socket.io');
 
 
 const {isRealString} = require('./utils/validation');
-const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {generateMessage} = require('./utils/message');
 const {Users} = require('./utils/users');
 
 
@@ -52,13 +52,6 @@ io.on('connection', (socket) => {
         callback();
    });
 
-   socket.on('createLocationMessage', (coords) => {
-       let user = users.getUser(socket.id);
-
-       if (user) {
-           io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
-       }
-   });
 
    socket.on('disconnect', () => {
        let user = users.removeUser(socket.id);
