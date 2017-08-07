@@ -81,7 +81,6 @@ let formattedTime;
            return 0;
        }
        socket.emit('createMessage', {
-           from: "User",
            text: input.val()
        }, function () {
            input.val('');
